@@ -1,35 +1,50 @@
-// I want to play Rock, Paper, Scissors against the computer
+// ROCK PAPER SCISSORS GAME
 
-// Algorithm for RPS
-// 1. Create 3 options: Rock, Paper, Scissors
-        // vars [R, P, S]
-// 2. Rock beats Scissors, Scissorts beats Paper, Paper beats Rock
-        // if (R > S) {R wins} else if (S > P) {S wins} else if (P > R) {P wins}
-// 3. User chooses one of the 3 options
-        // user "does" something: prompt("Do you choose R, P, or S?")
-// 4. Almost simultaneously, the computer chooses one of the 3 options randomly
-        // computer "does" something: [Math.floor(Math.random() * vars.length)]
-// 5. Refer back to the rules to determine who wins
-        // if (userChoice > computerChoice) {user wins} else if (computerChoice > userChoice) {computer wins} else {tie}
-// 6. Display the winner and the score for each player
-        // alert("You chose " + userChoice + " and the computer chose " + computerChoice + ". " + winner + " wins!")
-// 7. Ask the user if they want to play again 
-        // confirm("Do you want to play again?" + " Yes or No")
-// 8. If yes, repeat steps 3-7
-        // if (playAgain === true) {repeat steps 3-7} else {end game}
+const choices = ["rock", "paper", "scissors"];
+const playerDisplay = document.getElementById("playerDisplay");
+const computerDisplay = document.getElementById("computerDisplay");
+const resultDisplay = document.getElementById("resultDisplay");
+const playerScoreDisplay = document.getElementById("playerScoreDisplay");
+const computerScoreDisplay = document.getElementById("computerScoreDisplay");
+let playerScore = 0;
+let computerScore = 0;
 
-// As a user, I can enter R, P, or S to signify my choice of rock, paper, or scissors
-var RPS = ["R", "P", "S"];
-var userChoice = prompt("Do you choose R, P, or S?");
+function playGame(playerChoice) {
+        const computerChoice = choices[Math.floor(Math.random() * 3)];
+        let result = "";
 
-// As a user, I expect the computer to choose R, P, or S
-var computerChoice = RPS[Math.floor(Math.random() * RPS.length)];
+        if(playerChoice === computerChoice) {
+                result = "It's a tie!";
+        } else {
+                switch(playerChoice) {
+                        case "rock":
+                                result = (computerChoice === "scissors") ? "YOU WIN!" : "YOU LOSE!";
+                                break;
+                        case "paper":
+                                result = (computerChoice === "rock") ? "YOU WIN!" : "YOU LOSE!";
+                                break;
+                        case "scissors":
+                                result = (computerChoice === "paper") ? "YOU WIN!" : "YOU LOSE!";
+                                break;
+                }
+        }
 
-// As a user, I want the option to play again whether I win or lose
-var playAgain = confirm("Do you want to play again?");
+        playerDisplay.textContent = `PLAYER:  ${playerChoice}`;
+        computerDisplay.textContent = `COMPUTER:  ${computerChoice}`;
+        resultDisplay.textContent = result;
 
-// As a user, I want to see my total wins, ties and losses after each round
-var wins = 
+        resultDisplay.classList.remove("greenText", "redText");
 
-
-
+        switch(result) {
+                case "YOU WIN!":
+                        resultDisplay.classList.add("greenText");
+                        playerScore++;
+                        playerScoreDisplay.textContent = playerScore;
+                        break;
+                case "YOU LOSE!":
+                        resultDisplay.classList.add("redText");
+                        computerScore++;
+                        computerScoreDisplay.textContent = computerScore;
+                        break;
+        }
+}
